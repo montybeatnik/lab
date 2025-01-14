@@ -33,15 +33,7 @@ func (s *Store) CreateTable(query string) error {
 }
 
 func (s *Store) GetConfigs() []Config {
-	query := `-- get many 
-SELECT
-	id,
-	created_at,
-	desc,
-	path
-FROM configs;
-	`
-	rows, err := s.db.Query(query)
+	rows, err := s.db.Query(getConfigsQuery)
 	if err != nil {
 		log.Println(err)
 	}
@@ -49,13 +41,30 @@ FROM configs;
 	var cfgs []Config
 	for rows.Next() {
 		var cfg Config
-		err := rows.Scan(&cfg.ID, cfg.CreatedAt, cfg.Desc, cfg.Path)
+		err := rows.Scan(&cfg.ID, &cfg.CreatedAt, &cfg.Desc, &cfg.Path, &cfg.Type)
 		if err != nil {
 			log.Println(err)
 		}
 		cfgs = append(cfgs, cfg)
 	}
 	return cfgs
+}
+
+func (s *Store) AddConfig(cfg Config) (int, error) {
+	cfgResult, err := s.db.Exec(insertConfigQuery,
+		time.Now(),
+		cfg.Path,
+		cfg.Type,
+		cfg.Desc,
+	)
+	if err != nil {
+		return 0, err
+	}
+	cfgID, err := cfgResult.LastInsertId()
+	if err != nil {
+		return 0, fmt.Errorf("couldn't get last inserted ID %w", err)
+	}
+	return int(cfgID), nil
 }
 
 func (s *Store) AddDevice(dev Device) (int, error) {
@@ -84,6 +93,7 @@ func (s *Store) AddInterfaces(dev Device) error {
 			intf.VLAN,
 			intf.Address,
 			intf.Role,
+			intf.Description,
 		)
 		if err != nil {
 			log.Println(err)
@@ -112,6 +122,7 @@ func (s *Store) GetDevices() ([]Device, error) {
 			&intf.VLAN,
 			&intf.Address,
 			&intf.Role,
+			&intf.Description,
 		)
 		dev.Interfaces = append(dev.Interfaces, intf)
 		devs = append(devs, dev)

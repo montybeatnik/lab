@@ -6,15 +6,41 @@ CREATE TABLE IF NOT EXISTS configs (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	created_at DATETIME,
 	cfg_path TEXT,
-	desc TEXT
+	type TEXT,
+	desc TEXT,
+	device_id INTEGER,
+	FOREIGN KEY (device_id) REFERENCES devices(id)
 );`
+
+	insertConfigQuery = ` -- add one
+INSERT INTO configs (
+	created_at,
+	cfg_path,
+	type,
+	desc,
+	device_id,
+) VALUES (
+	?, ?, ?, ?, ?
+);	
+	`
+
+	getConfigsQuery = `-- get many 
+SELECT
+	id,
+	created_at,
+	desc,
+	path,
+	type
+FROM configs;
+	`
 
 	createDevicesTable = ` -- create devices
 CREATE TABLE IF NOT EXISTS devices (	
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	created_at DATETIME,
 	hostname TEXT,
-	mgmt_address TEXT
+	mgmt_address TEXT,
+	UNIQUE(hostname, mgmt_address)
 	-- can add this back if necessary
 	-- interfaces BLOB
 );`
@@ -29,6 +55,8 @@ CREATE TABLE IF NOT EXISTS interfaces (
 	vlan TEXT,
 	address TEXT,
 	role TEXT,
+	desc TEXT,
+	UNIQUE(ifd, ifl, device_id)
 	FOREIGN KEY (device_id) REFERENCES devices(id)
 );`
 
@@ -48,9 +76,10 @@ INSERT INTO interfaces (
 	ifl,
 	vlan,
 	address,
-	role
+	role,
+	desc
 ) VALUES (
-	?, ?, ?, ?, ?, ?, ?
+	?, ?, ?, ?, ?, ?, ?, ?
 );`
 
 	getDeviceQuery = ` --get one
@@ -63,7 +92,8 @@ SELECT
 	i.ifl,
 	i.vlan,
 	i.address,
-	i.role
+	i.role,
+	i.desc
 FROM devices d
 JOIN interfaces i 
 ON d.id = i.device_id;`

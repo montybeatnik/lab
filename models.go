@@ -7,6 +7,7 @@ type Config struct {
 	CreatedAt time.Time
 	Desc      string
 	Path      string
+	Type      string
 }
 
 type Interface struct {
@@ -27,7 +28,8 @@ type Interface struct {
 	Address string
 	// Role determines the functionality of the interface.
 	// Examples: ["core", "access"]
-	Role string
+	Role        string
+	Description string
 }
 
 type Device struct {
