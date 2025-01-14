@@ -18,7 +18,7 @@ INSERT INTO configs (
 	cfg_path,
 	type,
 	desc,
-	device_id,
+	device_id
 ) VALUES (
 	?, ?, ?, ?, ?
 );	
@@ -26,12 +26,16 @@ INSERT INTO configs (
 
 	getConfigsQuery = `-- get many 
 SELECT
-	id,
-	created_at,
-	desc,
-	path,
-	type
-FROM configs;
+	c.id,
+	c.created_at,
+	c.desc,
+	c.cfg_path,
+	c.type,
+	d.hostname,
+	d.mgmt_address
+FROM configs c
+JOIN devices d
+ON c.device_id = d.id;
 	`
 
 	createDevicesTable = ` -- create devices

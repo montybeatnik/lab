@@ -41,7 +41,15 @@ func (s *Store) GetConfigs() []Config {
 	var cfgs []Config
 	for rows.Next() {
 		var cfg Config
-		err := rows.Scan(&cfg.ID, &cfg.CreatedAt, &cfg.Desc, &cfg.Path, &cfg.Type)
+		err := rows.Scan(
+			&cfg.ID,
+			&cfg.CreatedAt,
+			&cfg.Desc,
+			&cfg.Path,
+			&cfg.Type,
+			&cfg.Device.Hostname,
+			&cfg.Device.MGMTAddress,
+		)
 		if err != nil {
 			log.Println(err)
 		}
@@ -56,6 +64,7 @@ func (s *Store) AddConfig(cfg Config) (int, error) {
 		cfg.Path,
 		cfg.Type,
 		cfg.Desc,
+		cfg.Device.ID,
 	)
 	if err != nil {
 		return 0, err

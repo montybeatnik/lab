@@ -2,12 +2,17 @@ package lab
 
 import "time"
 
+var (
+	BaseCfg = "base"
+)
+
 type Config struct {
 	ID        int
 	CreatedAt time.Time
 	Desc      string
 	Path      string
 	Type      string
+	Device    Device
 }
 
 type Interface struct {

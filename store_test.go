@@ -1,6 +1,9 @@
 package lab
 
-import "testing"
+import (
+	"testing"
+	"time"
+)
 
 func TestCreateTables(t *testing.T) {
 	testCases := []struct {
@@ -29,23 +32,6 @@ func TestCreateTables(t *testing.T) {
 		})
 	}
 }
-
-func TestAddBaseConfigs(t *testing.T) {
-	testCases := []struct {
-		desc string
-		cfg  Config
-	}{
-		{
-			desc: "",
-		},
-	}
-	for _, tC := range testCases {
-		t.Run(tC.desc, func(t *testing.T) {
-
-		})
-	}
-}
-
 func TestAddDevice(t *testing.T) {
 	testCases := []struct {
 		desc   string
@@ -55,7 +41,7 @@ func TestAddDevice(t *testing.T) {
 			desc: "lab-r1",
 			device: Device{
 				Hostname:    "lab-r1",
-				MGMTAddress: "10.0.0.86/24",
+				MGMTAddress: "10.0.0.86",
 				Interfaces: []Interface{
 					{
 						IFD:         "ge-0/0/0",
@@ -80,7 +66,7 @@ func TestAddDevice(t *testing.T) {
 			desc: "lab-r2",
 			device: Device{
 				Hostname:    "lab-r2",
-				MGMTAddress: "10.0.0.23/24",
+				MGMTAddress: "10.0.0.23",
 				Interfaces: []Interface{
 					{
 						IFD:         "ge-0/0/0",
@@ -105,7 +91,7 @@ func TestAddDevice(t *testing.T) {
 			desc: "lab-r3",
 			device: Device{
 				Hostname:    "lab-r3",
-				MGMTAddress: "10.0.0.212/24",
+				MGMTAddress: "10.0.0.212",
 				Interfaces: []Interface{
 					{
 						IFD:         "ge-0/0/0",
@@ -130,7 +116,7 @@ func TestAddDevice(t *testing.T) {
 			desc: "lab-r4",
 			device: Device{
 				Hostname:    "lab-r4",
-				MGMTAddress: "10.0.0.150/24",
+				MGMTAddress: "10.0.0.150",
 				Interfaces: []Interface{
 					{
 						IFD:         "ge-0/0/0",
@@ -155,7 +141,7 @@ func TestAddDevice(t *testing.T) {
 			desc: "lab-r5",
 			device: Device{
 				Hostname:    "lab-r5",
-				MGMTAddress: "10.0.0.87/24",
+				MGMTAddress: "10.0.0.87",
 				Interfaces: []Interface{
 					{
 						IFD:         "ge-0/0/0",
@@ -180,7 +166,7 @@ func TestAddDevice(t *testing.T) {
 			desc: "lab-r6",
 			device: Device{
 				Hostname:    "lab-r6",
-				MGMTAddress: "10.0.0.24/24",
+				MGMTAddress: "10.0.0.24",
 				Interfaces: []Interface{
 					{
 						IFD:         "ge-0/0/0",
@@ -205,7 +191,7 @@ func TestAddDevice(t *testing.T) {
 			desc: "lab-r7",
 			device: Device{
 				Hostname:    "lab-r7",
-				MGMTAddress: "10.0.0.213/24",
+				MGMTAddress: "10.0.0.213",
 				Interfaces: []Interface{
 					{
 						IFD:         "ge-0/0/0",
@@ -230,7 +216,7 @@ func TestAddDevice(t *testing.T) {
 			desc: "lab-r8",
 			device: Device{
 				Hostname:    "lab-r8",
-				MGMTAddress: "10.0.0.149/24",
+				MGMTAddress: "10.0.0.149",
 				Interfaces: []Interface{
 					{
 						IFD:         "ge-0/0/0",
@@ -264,11 +250,100 @@ func TestAddDevice(t *testing.T) {
 	}
 }
 
-func TestGetDevice(t *testing.T) {
+func TestGetDevices(t *testing.T) {
 	store := NewStore()
 	devs, err := store.GetDevices()
 	if err != nil {
 		t.Error(err)
 	}
 	t.Log(devs)
+}
+
+func TestAddBaseConfigs(t *testing.T) {
+	testCases := []struct {
+		desc string
+		cfg  Config
+	}{
+		{
+			desc: "lab-r1",
+			cfg: Config{
+				CreatedAt: time.Now(),
+				Type:      BaseCfg,
+				Path:      "./docs/configs/lab-r1-base.conf",
+				Device:    Device{ID: 1},
+			},
+		},
+		{
+			desc: "lab-r2",
+			cfg: Config{
+				CreatedAt: time.Now(),
+				Type:      BaseCfg,
+				Path:      "./docs/configs/lab-r2-base.conf",
+				Device:    Device{ID: 2},
+			},
+		},
+		{
+			desc: "lab-r3",
+			cfg: Config{
+				CreatedAt: time.Now(),
+				Type:      BaseCfg,
+				Path:      "./docs/configs/lab-r3-base.conf",
+				Device:    Device{ID: 3},
+			},
+		},
+		{
+			desc: "lab-r4",
+			cfg: Config{
+				CreatedAt: time.Now(),
+				Type:      BaseCfg,
+				Path:      "./docs/configs/lab-r4-base.conf",
+				Device:    Device{ID: 4},
+			},
+		},
+		{
+			desc: "lab-r5",
+			cfg: Config{
+				CreatedAt: time.Now(),
+				Type:      BaseCfg,
+				Path:      "./docs/configs/lab-r5-base.conf",
+				Device:    Device{ID: 5},
+			},
+		},
+		{
+			desc: "lab-r6",
+			cfg: Config{
+				CreatedAt: time.Now(),
+				Type:      BaseCfg,
+				Path:      "./docs/configs/lab-r6-base.conf",
+				Device:    Device{ID: 6},
+			},
+		},
+		{
+			desc: "lab-r7",
+			cfg: Config{
+				CreatedAt: time.Now(),
+				Type:      BaseCfg,
+				Path:      "./docs/configs/lab-r7-base.conf",
+				Device:    Device{ID: 7},
+			},
+		},
+		{
+			desc: "lab-r8",
+			cfg: Config{
+				CreatedAt: time.Now(),
+				Type:      BaseCfg,
+				Path:      "./docs/configs/lab-r8-base.conf",
+				Device:    Device{ID: 8},
+			},
+		},
+	}
+	for _, tC := range testCases {
+		t.Run(tC.desc, func(t *testing.T) {
+			store := NewStore()
+			_, err := store.AddConfig(tC.cfg)
+			if err != nil {
+				t.Error(err)
+			}
+		})
+	}
 }
