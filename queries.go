@@ -86,7 +86,14 @@ INSERT INTO interfaces (
 	?, ?, ?, ?, ?, ?, ?, ?
 );`
 
-	getDeviceQuery = ` --get one
+	getDevicesQuery = ` --get one
+SELECT
+	id,
+	hostname,
+	mgmt_address
+FROM devices`
+
+	getDevicesInterfacesQuery = ` --get one
 SELECT
 	d.id,
 	d.hostname,

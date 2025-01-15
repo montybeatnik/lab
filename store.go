@@ -112,7 +112,31 @@ func (s *Store) AddInterfaces(dev Device) error {
 }
 
 func (s *Store) GetDevices() ([]Device, error) {
-	rows, err := s.db.Query(getDeviceQuery)
+	rows, err := s.db.Query(getDevicesQuery)
+	if err != nil {
+		log.Println(err)
+	}
+	defer rows.Close()
+	var devs []Device
+	for rows.Next() {
+		var dev Device
+		var intf Interface
+		err := rows.Scan(
+			&dev.ID,
+			&dev.Hostname,
+			&dev.MGMTAddress,
+		)
+		dev.Interfaces = append(dev.Interfaces, intf)
+		devs = append(devs, dev)
+		if err != nil {
+			log.Println(err)
+		}
+	}
+	return devs, nil
+}
+
+func (s *Store) GetDevicesInterfaces() ([]Device, error) {
+	rows, err := s.db.Query(getDevicesQuery)
 	if err != nil {
 		log.Println(err)
 	}

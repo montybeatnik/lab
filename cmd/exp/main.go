@@ -31,10 +31,10 @@ func main() {
 			defer wg.Done()
 			cfg := getConfig(cfgfile)
 			dev := getDevice(ip)
-			output, err := dev.Diff(cfg)
-			// output, err := dev.ApplyConfig(cfg)
+			// output, err := dev.Diff(cfg)
+			output, err := dev.ApplyConfig(cfg)
 			if err != nil {
-				log.Println(err)
+				log.Printf("cfg failed on %v; %v\n", ip, err)
 			}
 			fmt.Println(output)
 
@@ -73,9 +73,4 @@ func getDevice(ip string) *juniper.JuniperClient {
 		devcon.WithHostKeyCallback(khfp),
 	)
 	return jnprClient
-	// intTerse, err := jnprClient.InterfacesTerse()
-	// if err != nil {
-	// 	log.Println(err)
-	// }
-	// fmt.Println(intTerse)
 }
