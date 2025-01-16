@@ -1,0 +1,15 @@
+set version 12.1X46-D20.5
+set system host-name lab-r1
+set system root-authentication encrypted-password "$1$yvYEwpoK$I8F2D.t3TlmSVQ06j6lH31"
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$1$MHlFWsLW$mGv21F0KZNcbdbzqgwNlM1"
+set system login user rolodev uid 2001
+set system login user rolodev class super-user
+set system login user rolodev authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC+TGiKLtob9yQB/AaT2qeUPj65AY0QnpwiROzxDIMnDVzFobTK/drDEyVO+9KmEkVKjHeROsOnpNiIjNMF2eIDBRG3tpxDdegrCXVeeBNyCEI/wk77mZrD82vA4mue6em6Q9fDxSTiklgliwLdDVHSkIhBb8yQc9IDe6V6i00sX9lBLijwH3M1abnMatDxIf/EFg0iPm11heDV2kVt0bVANV8sB5ME+uCyEnJXciztwIJ7kKdPmfM8VsQc8qlt5BcGlFlbDeW59QW10wM1JSxOnGydLxwLfnCkSbLTGSeWqCnCX0Wcv+Oh8IFLgM16LYZZdurtJCkD8adqrViuxTcKAwhVe5pNx3b/HXB3uLNdH/bX2C5UStvPvCo5kVqz62tErOrgJQK7F20PJAA8N2g1Z1dZAlBRPH3ivSQVA/t6T1xyiQ/Bw4pkB3GvOkNzGM8iHXe1RPOlebfzF0P8uawtIERS7HLppQhX/WOlnr42u0JzyrIygLnSKAYVP++1Jv8= chrishern@1319yy1.corp.pvt"
+set system services ssh
+set system services netconf ssh
+set protocols lldp interface all
+set security forwarding-options family inet6 mode packet-based
+set security forwarding-options family mpls mode packet-based
+set security forwarding-options family iso mode packet-based

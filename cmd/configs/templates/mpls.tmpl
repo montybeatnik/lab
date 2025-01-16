@@ -1,0 +1,14 @@
+{{define "mpls" -}}
+{{range .Interfaces -}}
+{{if eq .Role "infrastructure" -}}
+set protocols mpls interface {{.IFD}}.{{.IFL}}
+{{end -}}
+{{end -}}
+set protocols mpls lsp R1_TO_R2 to 10.1.0.2
+set protocols mpls lsp R1_TO_R3 to 10.1.0.3
+set protocols mpls lsp R1_TO_R4 to 10.1.0.4
+set protocols mpls lsp R1_TO_R5 to 10.1.0.5
+set protocols mpls lsp R1_TO_R6 to 10.1.0.6
+set protocols mpls lsp R1_TO_R7 to 10.1.0.7
+set protocols mpls lsp R1_TO_R8 to 10.1.0.8
+{{end -}}

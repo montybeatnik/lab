@@ -1,0 +1,8 @@
+{{define "rsvp" -}}
+{{range .Interfaces -}}
+{{if eq .Role "infrastructure" -}}
+set protocols rsvp interface {{.IFD}}.{{.IFL}}
+{{else -}}
+{{end -}}
+{{end -}}
+{{end -}}
