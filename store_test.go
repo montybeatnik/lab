@@ -347,3 +347,15 @@ func TestAddBaseConfigs(t *testing.T) {
 		})
 	}
 }
+
+func TestGetDeviceInterfaces(t *testing.T) {
+	store := NewStore()
+	dev, err := store.GetDevicesInterfaces(Device{ID: 1})
+	if err != nil {
+		t.Error(err)
+	}
+	if len(dev.Interfaces) != 2 {
+		t.Errorf("got %v; expected %v", len(dev.Interfaces), 2)
+	}
+	t.Logf("%+v\n", dev)
+}

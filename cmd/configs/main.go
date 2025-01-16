@@ -10,32 +10,39 @@ import (
 )
 
 func main() {
-	labR1 := "lab-r1"
-	cfg, err := buildCfg(labR1)
+	store := lab.NewStore()
+	dev, err := store.GetDevicesInterfaces(lab.Device{ID: 1})
+	if err != nil {
+		log.Println(err)
+	}
+	for _, intf := range dev.Interfaces {
+		fmt.Printf("%+v\n", intf)
+	}
+	cfg, err := buildCfg(dev)
 	if err != nil {
 		log.Println(err)
 	}
 	fmt.Println(cfg)
 }
 
-func buildCfg(hostname string) (string, error) {
-	dev := lab.Device{
-		Hostname: hostname,
-		Interfaces: []lab.Interface{
-			{
-				IFD:     "ge-0/0/0",
-				IFL:     "0",
-				Address: "192.168.1.0/31",
-				Role:    "infrastructure",
-			},
-			{
-				IFD:     "ge-0/0/1",
-				IFL:     "0",
-				Address: "192.168.1.2/31",
-				Role:    "infrastructure",
-			},
-		},
-	}
+func buildCfg(dev lab.Device) (string, error) {
+	// dev := lab.Device{
+	// 	Hostname: hostname,
+	// 	Interfaces: []lab.Interface{
+	// 		{
+	// 			IFD:     "ge-0/0/0",
+	// 			IFL:     "0",
+	// 			Address: "192.168.1.0/31",
+	// 			Role:    "infrastructure",
+	// 		},
+	// 		{
+	// 			IFD:     "ge-0/0/1",
+	// 			IFL:     "0",
+	// 			Address: "192.168.1.2/31",
+	// 			Role:    "infrastructure",
+	// 		},
+	// 	},
+	// }
 	t, err := template.ParseGlob("./cmd/configs/templates/*")
 	if err != nil {
 		return "", fmt.Errorf("failed to get templates: %w", err)

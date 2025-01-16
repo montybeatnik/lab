@@ -93,11 +93,8 @@ SELECT
 	mgmt_address
 FROM devices`
 
-	getDevicesInterfacesQuery = ` --get one
+	getDevicesInterfacesByDeviceIDQuery = ` --get one
 SELECT
-	d.id,
-	d.hostname,
-	d.mgmt_address,
 	i.id,
 	i.ifd,
 	i.ifl,
@@ -105,7 +102,9 @@ SELECT
 	i.address,
 	i.role,
 	i.desc
-FROM devices d
-JOIN interfaces i 
-ON d.id = i.device_id;`
+FROM interfaces i
+JOIN devices d 
+ON d.id = i.device_id
+WHERE d.id = ?
+ORDER BY i.ifd;`
 )
