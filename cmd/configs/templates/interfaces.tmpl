@@ -1,9 +1,13 @@
-{{define "interfaces"}}
-set interface lo0 unit 0 family inet address 10.1.0.1/32
+{{define "interfaces" -}}
+set interface lo0 unit 0 family inet address {{.Loopback}}
+set interface lo0 unit 0 family iso address {{.ISO}}
 {{range .Interfaces}}
 set interfaces {{.IFD}} flexible-vlan-tagging
 set interfaces {{.IFD}} unit {{.IFL}} vlan-id {{.VLAN}}
-set interfaces {{.IFD}} unit {{.IFL}} family mpls
 set interfaces {{.IFD}} unit {{.IFL}} family inet address {{.Address}}
+{{ if eq .Role "infrastructure" -}}
+set interfaces {{.IFD}} unit {{.IFL}} family mpls
+set interfaces {{.IFD}} unit {{.IFL}} family iso
+{{end -}}
 {{end -}}
 {{end}}

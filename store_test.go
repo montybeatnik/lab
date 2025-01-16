@@ -32,6 +32,7 @@ func TestCreateTables(t *testing.T) {
 		})
 	}
 }
+
 func TestAddDevice(t *testing.T) {
 	testCases := []struct {
 		desc   string
@@ -42,13 +43,15 @@ func TestAddDevice(t *testing.T) {
 			device: Device{
 				Hostname:    "lab-r1",
 				MGMTAddress: "10.0.0.86",
+				Loopback:    "10.1.0.1/32",
+				ISO:         "49.0001.0100.0001.00",
 				Interfaces: []Interface{
 					{
 						IFD:         "ge-0/0/0",
 						IFL:         "0",
 						VLAN:        "0",
 						Address:     "172.16.12.1/24",
-						Role:        "core",
+						Role:        "infrastructure",
 						Description: "TO-LAB-R2",
 					},
 					{
@@ -56,7 +59,7 @@ func TestAddDevice(t *testing.T) {
 						IFL:         "0",
 						VLAN:        "0",
 						Address:     "172.16.16.1/24",
-						Role:        "core",
+						Role:        "infrastructure",
 						Description: "TO-LAB-R6",
 					},
 				},
@@ -67,13 +70,15 @@ func TestAddDevice(t *testing.T) {
 			device: Device{
 				Hostname:    "lab-r2",
 				MGMTAddress: "10.0.0.23",
+				Loopback:    "10.1.0.2/32",
+				ISO:         "49.0001.0100.0002.00",
 				Interfaces: []Interface{
 					{
 						IFD:         "ge-0/0/0",
 						IFL:         "0",
 						VLAN:        "0",
 						Address:     "172.16.12.2/24",
-						Role:        "core",
+						Role:        "infrastructure",
 						Description: "TO-LAB-R1",
 					},
 					{
@@ -81,7 +86,7 @@ func TestAddDevice(t *testing.T) {
 						IFL:         "0",
 						VLAN:        "0",
 						Address:     "172.16.23.2/24",
-						Role:        "core",
+						Role:        "infrastructure",
 						Description: "TO-LAB-R3",
 					},
 				},
@@ -92,13 +97,15 @@ func TestAddDevice(t *testing.T) {
 			device: Device{
 				Hostname:    "lab-r3",
 				MGMTAddress: "10.0.0.212",
+				Loopback:    "10.1.0.3/32",
+				ISO:         "49.0001.0100.0003.00",
 				Interfaces: []Interface{
 					{
 						IFD:         "ge-0/0/0",
 						IFL:         "0",
 						VLAN:        "0",
 						Address:     "172.16.34.3/24",
-						Role:        "core",
+						Role:        "infrastructure",
 						Description: "TO-LAB-R4",
 					},
 					{
@@ -106,7 +113,7 @@ func TestAddDevice(t *testing.T) {
 						IFL:         "0",
 						VLAN:        "0",
 						Address:     "172.16.23.3/24",
-						Role:        "core",
+						Role:        "infrastructure",
 						Description: "TO-LAB-R2",
 					},
 				},
@@ -117,13 +124,15 @@ func TestAddDevice(t *testing.T) {
 			device: Device{
 				Hostname:    "lab-r4",
 				MGMTAddress: "10.0.0.150",
+				Loopback:    "10.1.0.4/32",
+				ISO:         "49.0001.0100.0004.00",
 				Interfaces: []Interface{
 					{
 						IFD:         "ge-0/0/0",
 						IFL:         "0",
 						VLAN:        "0",
 						Address:     "172.16.34.4/24",
-						Role:        "core",
+						Role:        "infrastructure",
 						Description: "TO-LAB-R3",
 					},
 					{
@@ -131,7 +140,7 @@ func TestAddDevice(t *testing.T) {
 						IFL:         "0",
 						VLAN:        "0",
 						Address:     "172.16.45.4/24",
-						Role:        "core",
+						Role:        "infrastructure",
 						Description: "TO-LAB-R5",
 					},
 				},
@@ -142,13 +151,15 @@ func TestAddDevice(t *testing.T) {
 			device: Device{
 				Hostname:    "lab-r5",
 				MGMTAddress: "10.0.0.87",
+				Loopback:    "10.1.0.5/32",
+				ISO:         "49.0001.0100.0005.00",
 				Interfaces: []Interface{
 					{
 						IFD:         "ge-0/0/0",
 						IFL:         "0",
 						VLAN:        "0",
 						Address:     "172.16.58.5/24",
-						Role:        "core",
+						Role:        "infrastructure",
 						Description: "TO-LAB-R8",
 					},
 					{
@@ -156,7 +167,7 @@ func TestAddDevice(t *testing.T) {
 						IFL:         "0",
 						VLAN:        "0",
 						Address:     "172.16.45.5/24",
-						Role:        "core",
+						Role:        "infrastructure",
 						Description: "TO-LAB-R4",
 					},
 				},
@@ -167,13 +178,15 @@ func TestAddDevice(t *testing.T) {
 			device: Device{
 				Hostname:    "lab-r6",
 				MGMTAddress: "10.0.0.24",
+				Loopback:    "10.1.0.6/32",
+				ISO:         "49.0001.0100.0006.00",
 				Interfaces: []Interface{
 					{
 						IFD:         "ge-0/0/0",
 						IFL:         "0",
 						VLAN:        "0",
 						Address:     "172.16.67.6/24",
-						Role:        "core",
+						Role:        "infrastructure",
 						Description: "TO-LAB-R7",
 					},
 					{
@@ -181,7 +194,7 @@ func TestAddDevice(t *testing.T) {
 						IFL:         "0",
 						VLAN:        "0",
 						Address:     "172.16.16.6/24",
-						Role:        "core",
+						Role:        "infrastructure",
 						Description: "TO-LAB-R1",
 					},
 				},
@@ -192,13 +205,15 @@ func TestAddDevice(t *testing.T) {
 			device: Device{
 				Hostname:    "lab-r7",
 				MGMTAddress: "10.0.0.213",
+				Loopback:    "10.1.0.7/32",
+				ISO:         "49.0001.0100.0007.00",
 				Interfaces: []Interface{
 					{
 						IFD:         "ge-0/0/0",
 						IFL:         "0",
 						VLAN:        "0",
 						Address:     "172.16.67.7/24",
-						Role:        "core",
+						Role:        "infrastructure",
 						Description: "TO-LAB-R6",
 					},
 					{
@@ -206,7 +221,7 @@ func TestAddDevice(t *testing.T) {
 						IFL:         "0",
 						VLAN:        "0",
 						Address:     "172.16.78.7/24",
-						Role:        "core",
+						Role:        "infrastructure",
 						Description: "TO-LAB-R8",
 					},
 				},
@@ -217,13 +232,15 @@ func TestAddDevice(t *testing.T) {
 			device: Device{
 				Hostname:    "lab-r8",
 				MGMTAddress: "10.0.0.149",
+				Loopback:    "10.1.0.8/32",
+				ISO:         "49.0001.0100.0008.00",
 				Interfaces: []Interface{
 					{
 						IFD:         "ge-0/0/0",
 						IFL:         "0",
 						VLAN:        "0",
 						Address:     "172.16.58.8/24",
-						Role:        "core",
+						Role:        "infrastructure",
 						Description: "TO-LAB-R5",
 					},
 					{
@@ -231,7 +248,7 @@ func TestAddDevice(t *testing.T) {
 						IFL:         "0",
 						VLAN:        "0",
 						Address:     "172.16.78.8/24",
-						Role:        "core",
+						Role:        "infrastructure",
 						Description: "TO-LAB-R7",
 					},
 				},

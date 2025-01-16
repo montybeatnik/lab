@@ -32,7 +32,7 @@ type Interface struct {
 	// This will come back to byte (see what I did there) me.
 	Address string
 	// Role determines the functionality of the interface.
-	// Examples: ["core", "access"]
+	// Examples: ["infrastructure", "access"]
 	Role        string
 	Description string
 }
@@ -41,5 +41,7 @@ type Device struct {
 	ID          int
 	Hostname    string
 	MGMTAddress string
+	Loopback    string
+	ISO         string
 	Interfaces  []Interface
 }

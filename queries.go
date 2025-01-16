@@ -44,9 +44,9 @@ CREATE TABLE IF NOT EXISTS devices (
 	created_at DATETIME,
 	hostname TEXT,
 	mgmt_address TEXT,
+	loopback TEXT,
+	iso TEXT,
 	UNIQUE(hostname, mgmt_address)
-	-- can add this back if necessary
-	-- interfaces BLOB
 );`
 
 	createInterfacesTable = ` -- create interfaces
@@ -68,9 +68,11 @@ CREATE TABLE IF NOT EXISTS interfaces (
 INSERT INTO devices (
 	created_at,
 	hostname,
-	mgmt_address
+	mgmt_address,
+	loopback,
+	iso
 ) VALUES (
-	?, ?, ?
+	?, ?, ?, ?, ?
 );`
 	insertInterface = ` -- add one
 INSERT INTO interfaces (
@@ -90,8 +92,20 @@ INSERT INTO interfaces (
 SELECT
 	id,
 	hostname,
-	mgmt_address
+	mgmt_address,
+	loopback,
+	iso
 FROM devices`
+
+	getDeviceByHostnameQuery = ` --get one
+SELECT
+	id,
+	hostname,
+	mgmt_address,
+	loopback,
+	iso
+FROM devices
+WHERE hostname = ?`
 
 	getDevicesInterfacesByDeviceIDQuery = ` --get one
 SELECT

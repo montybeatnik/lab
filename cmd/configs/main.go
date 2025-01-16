@@ -11,7 +11,11 @@ import (
 
 func main() {
 	store := lab.NewStore()
-	dev, err := store.GetDevicesInterfaces(lab.Device{ID: 1})
+	dev, err := store.GetDeviceByHostname("lab-r1")
+	if err != nil {
+		log.Println(err)
+	}
+	dev, err = store.GetDevicesInterfaces(dev)
 	if err != nil {
 		log.Println(err)
 	}

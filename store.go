@@ -77,7 +77,13 @@ func (s *Store) AddConfig(cfg Config) (int, error) {
 }
 
 func (s *Store) AddDevice(dev Device) (int, error) {
-	devResult, err := s.db.Exec(insertDevice, time.Now(), dev.Hostname, dev.MGMTAddress)
+	devResult, err := s.db.Exec(insertDevice,
+		time.Now(),
+		dev.Hostname,
+		dev.MGMTAddress,
+		dev.Loopback,
+		dev.ISO,
+	)
 	if err != nil {
 		return 0, err
 	}
@@ -120,19 +126,34 @@ func (s *Store) GetDevices() ([]Device, error) {
 	var devs []Device
 	for rows.Next() {
 		var dev Device
-		var intf Interface
 		err := rows.Scan(
 			&dev.ID,
 			&dev.Hostname,
 			&dev.MGMTAddress,
+			&dev.Loopback,
+			&dev.ISO,
 		)
-		dev.Interfaces = append(dev.Interfaces, intf)
 		devs = append(devs, dev)
 		if err != nil {
 			log.Println(err)
 		}
 	}
 	return devs, nil
+}
+
+func (s *Store) GetDeviceByHostname(hostname string) (Device, error) {
+	var dev Device
+	err := s.db.QueryRow(getDeviceByHostnameQuery, hostname).Scan(
+		&dev.ID,
+		&dev.Hostname,
+		&dev.MGMTAddress,
+		&dev.Loopback,
+		&dev.ISO,
+	)
+	if err != nil {
+		log.Println(err)
+	}
+	return dev, nil
 }
 
 func (s *Store) GetDevicesInterfaces(dev Device) (Device, error) {
