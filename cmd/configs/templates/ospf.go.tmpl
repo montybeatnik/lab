@@ -1,9 +1,9 @@
-{{define "ospf" -}}
+{{define "ospf"}}
 set protocols ospf area 0 interface lo0.0 passive
-{{ range .Interfaces -}}
-{{ if eq .Role "infrastructure" -}}
+    {{- range .Interfaces }}
+        {{- if eq .Role "infrastructure" }}
 set protocols ospf area 0 interface {{.IFD}}.{{.IFL}} interface-type p2p
-{{end -}}
-{{end -}}
+        {{- end }}
+    {{- end }}
 set protocols ospf traffic-engineering
 {{end -}}
